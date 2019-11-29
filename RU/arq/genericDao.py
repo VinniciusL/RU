@@ -21,9 +21,15 @@ class GenericDao(ABC):
 		'''Método abstrato para remover'''
 
 	@abstractmethod
-	def listar(self,):
+	def listar(self):
 		'''Método abstrato para listar'''
 		pass
+
+	def findById(self,table,id):
+		'''Método responsável por buscar uma entidade através do id'''
+		table = self._db.table(table)
+		dados = query.search(where('id') == id)
+		return dados[0]
 
 	@property
 	def db(self):

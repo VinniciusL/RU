@@ -14,15 +14,20 @@ class PessoaDao(GenericDao):
 
 	def atualizar(self,field,value,id):
 		'''Método responsável por atualizar um campo de uma pessoa'''
-		query = Query()
-		pessoas = self._db.search(where('id') == id)
+		pessoas = self._table.search(where('id') == id)
 		for pessoa in pessoas:
 			pessoa[field] = value
-		self._db.write_back(pessoas)
+		self._table.write_back(pessoas)
 
 	def remover(self,id):
 		'''Método responsável por remover uma pessoa'''
-		self._db.remove(where('id') == id)
+		self._table.remove(where('id') == id)
 
 	def listar(self):
-		return self._talbe.all()
+		'''Método responsável por listar todas as pessoas'''
+		return self._table.all()
+
+	def findByCpf(self, cpf):
+		'''Método que procura uma pessoa a partir do cpf informado'''
+		pessoas = self._table.search(where('cpf') == cpf)
+		return pessoas[0]
